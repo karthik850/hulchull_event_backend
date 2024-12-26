@@ -123,7 +123,7 @@ def update_secret_code(request):
         secret_code = SecretCodeDB.objects.get(fav_number=favnumber)
         
         # Update the record only if the current user hasn't opened it yet
-        if len(secret_code.user_name)>0 or secret_code.is_opened:
+        if secret_code.is_opened:
             return Response({"error": "This record has already been opened by another user."}, status=status.HTTP_400_BAD_REQUEST)
         
         # Update the fields for the authenticated user

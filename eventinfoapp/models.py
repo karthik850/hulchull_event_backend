@@ -36,7 +36,7 @@ class ImportantPersons(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
     image_url = models.URLField(max_length=500,null=True, blank=True)
-    ender = models.CharField(
+    gender = models.CharField(
         max_length=1,
         choices=GENDER_CHOICES,
         default='M',  # Optional: Set a default value

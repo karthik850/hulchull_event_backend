@@ -2,8 +2,8 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework import status
-from .models import Events,Highlights
-from .serializers import EventSerializer, HighlightsSerializer
+from .models import Events,Highlights,ImportantPersons
+from .serializers import EventSerializer, HighlightsSerializer,ImportantPersonsSerializer
 
 
 # Create your views here.
@@ -59,6 +59,21 @@ def get_highlights_list(request):
 
     elif request.method == 'POST':
         serializer = EventSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET', 'POST'])
+@permission_classes([AllowAny])
+def get_important_person_list(request):
+    if request.method == 'GET':
+        importantPersons = ImportantPersons.objects.all()
+        serializer = ImportantPersonsSerializer(importantPersons, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer = ImportantPersonsSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Events,Highlights
+from .models import Events,Highlights,ImportantPersons
 
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
@@ -10,3 +10,8 @@ class HighlightsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Highlights
         fields = '__all__'
+
+class ImportantPersonsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ImportantPersons
+        fields= '__all__'

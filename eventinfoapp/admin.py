@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Highlights,Events
+from .models import Highlights,Events,ImportantPersons
 # Register your models here.
 @admin.register(Highlights)
 class HighlightAdmin(admin.ModelAdmin):
@@ -8,4 +8,8 @@ class HighlightAdmin(admin.ModelAdmin):
 
 @admin.register(Events)
 class EventAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(ImportantPersons)
+class ImportantPersonsAdmin(admin.ModelAdmin):
     pass

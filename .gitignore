@@ -1,0 +1,7 @@
+db.sqlite3
+
+hulchull_event_backend\eventinfoapp\migrations
+hulchull_event_backend\eventinfoapp\__pycache__
+
+hulchull_event_backend\hulchullapp\__pycache__
+hulchull_event_backend\hulchullapp\migrations

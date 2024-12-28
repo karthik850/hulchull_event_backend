@@ -11,7 +11,7 @@ class SecretCodeUserSerializer(serializers.ModelSerializer):
     """Serializer for user, excluding username."""
     class Meta:
         model = SecretCodeDB
-        exclude = ('user_name',)
+        exclude = ('user_name','associate_name','gender')
 
 class UserCreationSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=150)

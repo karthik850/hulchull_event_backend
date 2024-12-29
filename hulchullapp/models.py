@@ -6,7 +6,7 @@ class SecretCodeDB(models.Model):
         ('M', 'Male'),
         ('F', 'Female'),
     ]
-    fav_number = models.IntegerField()
+    fav_number = models.IntegerField(unique=True)
     associate_name = models.CharField(max_length=255)
     user_name = models.CharField(max_length=255, null=True, blank=True)  # Allows user_name to be empty
     is_opened = models.BooleanField(default=False)

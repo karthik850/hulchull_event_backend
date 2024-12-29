@@ -1,7 +1,7 @@
 db.sqlite3
 
-eventinfoapp\migrations
-eventinfoapp\__pycache__
+eventinfoapp/migrations/
+eventinfoapp/__pycache__/
 
-hulchullapp\__pycache__
-hulchullapp\migrations
+hulchullapp/__pycache__/
+hulchullapp/migrations/

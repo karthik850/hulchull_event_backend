@@ -14,7 +14,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
 
+from django.http import JsonResponse
 from datetime import datetime
+import json
 
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])  # Require token-based authentication
@@ -205,3 +207,33 @@ def logout_view(request):
     
     except Token.DoesNotExist:
         return Response({"message": "No active session found."}, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+from django.conf import settings
+import os
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def insert_bulk_data(request):
+    data=[]
+    print("Karthik inside insert")
+    app_directory = os.path.dirname(__file__) 
+    file_path = os.path.join(app_directory, 'employeedata.json')
+    print(file_path)
+    with open(file_path, 'r') as file:
+        data = json.load(file)
+    bulk_instances = []
+    for entry in data:
+        bulk_instances.append(
+            SecretCodeDB(
+                fav_number=entry["fav_number"],
+                associate_name=entry["associate_name"],
+                gender=entry["gender"]
+            )
+        )
+
+    # Perform the bulk create operation
+    SecretCodeDB.objects.bulk_create(bulk_instances)
+
+    return JsonResponse({"message": "Data inserted successfully!"})

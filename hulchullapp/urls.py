@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import create_user, admin_secretcode_list, get_my_secret_code, logout_view, search_by_associate_name, search_by_user_name, update_secret_code, user_secretcode_list, login_view
+from .views import create_user, admin_secretcode_list, get_my_secret_code, insert_bulk_data, logout_view, search_by_associate_name, search_by_user_name, update_secret_code, user_secretcode_list, login_view
 
 urlpatterns = [
     path('admin/secretcodes/', admin_secretcode_list, name='admin-secretcode-list'),
@@ -11,4 +11,5 @@ urlpatterns = [
     path('search_by_associate_name/',search_by_associate_name,name='search_by_associate_name'),
     path('get-my-secret-code/',get_my_secret_code,name='get_my_secret_code'),
     path('update-secret-code/', update_secret_code, name='update-secret-code'),
+    path('insert-bulk-data/',insert_bulk_data,name="insert-bulk-data")
 ]

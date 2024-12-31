@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class SecretCodeDB(models.Model):
@@ -21,5 +22,13 @@ class SecretCodeDB(models.Model):
     def __str__(self):
         return f"{self.associate_name} - {self.fav_number}"
     
+
+class UsersDB(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_name = models.TextField()
+    # other fields like picture, address, etc.
+
+    def __str__(self):
+        return f'{self.user.username}-{self.user_name} Profile'
     
 

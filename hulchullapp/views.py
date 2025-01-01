@@ -1,3 +1,4 @@
+from django.db import IntegrityError
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.authentication import TokenAuthentication
@@ -37,8 +38,8 @@ def admin_secretcode_list(request):
 @permission_classes([IsAuthenticated])  # Any authenticated user can access
 def user_secretcode_list(request):
     user= request.user
-    key = employee_data[str(user.username)]
-    secret_codes = SecretCodeDB.objects.exclude(associate_name__iexact = key)  # Filter by the current user's secret codes
+    # key = employee_data[str(user.username)]
+    secret_codes = SecretCodeDB.objects.exclude(associate_name__iexact = user.username)  # Filter by the current user's secret codes
     serializer = SecretCodeUserSerializer(secret_codes, many=True)
 
     # Exclude the username from the response for users
@@ -97,10 +98,10 @@ def get_my_secret_code(request):
     """Search for secret codes for the logged-in user where user_name matches the query parameter"""
     
     user = request.user  # Get the current logged-in user
-    key = employee_data[str(user.username)]
+    # key = employee_data[str(user.username)]
 
         # Filter SecretCodeDB objects for the logged-in user and match the user_name field
-    matching_codes = SecretCodeDB.objects.filter(user_name__iexact=key)  # case-insensitive match
+    matching_codes = SecretCodeDB.objects.filter(user_name__iexact=user.username)  # case-insensitive match
         # Serialize the entire SecretCodeDB object
     serializer = SecretCodeDBSerializer(matching_codes, many=True)
         
@@ -132,7 +133,7 @@ def update_secret_code(request):
             return Response({"error": "This record has already been opened by another user."}, status=status.HTTP_400_BAD_REQUEST)
         
         # Update the fields for the authenticated user
-        secret_code.user_name = employee_data[user.username]  # Update the user_name with the logged-in user's username
+        secret_code.user_name = user.username  # Update the user_name with the logged-in user's username
         secret_code.is_opened = True  # Set isOpened to True
         secret_code.opened_on = datetime.now()  # Set the openedOn field to the current timestamp
         
@@ -160,10 +161,19 @@ def create_user(request):
             
             # Create the user and set the password
             try:
+                username=employee_data[username]
                 user = User.objects.create_user(username=username, password=password)
-                return Response({"message": "User created successfully!"}, status=status.HTTP_201_CREATED)
+                token, created = Token.objects.get_or_create(user=user)
+                return Response({"token": token.key,"username":user.username,"isadmin":user.is_staff}, status=status.HTTP_201_CREATED)
             except ValidationError as e:
                 return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            except KeyError as e:
+                return Response({"error": str(e)}, status=status.HTTP_406_NOT_ACCEPTABLE)
+            except IntegrityError as e:
+                return Response(
+                        {"error": "A user with this username already exists."},
+                        status=status.HTTP_409_CONFLICT  # Use 409 Conflict for "already exists"
+                        )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -179,13 +189,13 @@ def login_view(request):
         if serializer.is_valid():
             username = serializer.validated_data['username']
             password = serializer.validated_data['password']
-            
+            username= employee_data[username]
             # Authenticate the user
             user = authenticate(username=username, password=password)
             if user is not None:
                 # Generate or retrieve token for the user
                 token, created = Token.objects.get_or_create(user=user)
-                return Response({"token": token.key,"username":employee_data[user.username],"isadmin":user.is_staff}, status=status.HTTP_200_OK)
+                return Response({"token": token.key,"username":user.username,"isadmin":user.is_staff}, status=status.HTTP_200_OK)
             else:
                 return Response({"error": "Invalid credentials"}, status=status.HTTP_400_BAD_REQUEST)
         

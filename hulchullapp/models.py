@@ -23,12 +23,12 @@ class SecretCodeDB(models.Model):
         return f"{self.associate_name} - {self.fav_number}"
     
 
-class UsersDB(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    user_name = models.TextField()
-    # other fields like picture, address, etc.
+# class UsersDB(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     user_name = models.TextField()
+#     # other fields like picture, address, etc.
 
-    def __str__(self):
-        return f'{self.user.username}-{self.user_name} Profile'
+#     def __str__(self):
+#         return f'{self.user.username}-{self.user_name} Profile'
     
 

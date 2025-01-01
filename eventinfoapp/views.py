@@ -115,7 +115,26 @@ def get_all_events(request):
 
 @api_view(['POST'])
 def update_event_team_scores(request, event_id):
-    """Update team scores for a specific event."""
+    """Update team scores for a specific event, ensuring to handle position changes."""
     event = get_object_or_404(Events, id=event_id)
-    event.update_team_scores()
-    return Response({"message": "Team scores updated successfully."})
+
+    # Get the previous spots before the update
+    previous_spots = {
+        'team_spot_1': event.team_spot_1,
+        'team_spot_2': event.team_spot_2,
+        'team_spot_3': event.team_spot_3,
+        'team_spot_4': event.team_spot_4,
+        'team_spot_5': event.team_spot_5,
+    }
+
+    # Update the team spots based on the request data
+    team_spots_data = request.data  # Assuming the request data contains the new team spots
+
+    event.team_spot_1 = team_spots_data.get('team_spot_1', event.team_spot_1)
+    event.team_spot_2 = team_spots_data.get('team_spot_2', event.team_spot_2)
+    event.team_spot_3 = team_spots_data.get('team_spot_3', event.team_spot_3)
+    event.team_spot_4 = team_spots_data.get('team_spot_4', event.team_spot_4)
+    event.team_spot_5 = team_spots_data.get('team_spot_5', event.team_spot_5)
+
+    event.save()  # This will trigger score updates based on position changes
+

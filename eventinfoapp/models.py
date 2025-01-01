@@ -21,6 +21,11 @@ class Teams(models.Model):
         self.overall_points += points
         self.save()
 
+    def subtract_points(self, points):
+        """Subtracts points from the team's overall points."""
+        self.overall_points -= points
+        self.save()
+
     def reset_points(self):
         """Resets the team's overall points to 0."""
         self.overall_points = 0
@@ -51,23 +56,40 @@ class Events(models.Model):
 
     def __str__(self):
         return self.name
-    def update_team_scores(self):
-        """Increase overall score for team in team_spot_1 by 10 points."""
-        if self.team_spot_1:
-            self.team_spot_1.add_points(10)
-        if self.team_spot_2:
-            self.team_spot_2.add_points(6)
-        if self.team_spot_3:
-            self.team_spot_3.add_points(4)
-        if self.team_spot_4:
-            self.team_spot_4.add_points(2)
-        if self.team_spot_5:
-            self.team_spot_5.add_points(0)
+    def calculate_points_change(self, old_spots, new_spots):
+        """Adjust team points based on changes in team spots."""
+        point_map = {1: 10, 2: 6, 3: 4, 4: 2, 5: 0}
+
+        for spot, new_team in new_spots.items():
+            old_team = old_spots.get(spot)
+            if old_team != new_team:  # Only process changes
+                if old_team:
+                    # Subtract points for the previous position
+                    old_team.subtract_points(point_map[spot])
+                if new_team:
+                    # Add points for the new position
+                    new_team.add_points(point_map[spot])
 
     def save(self, *args, **kwargs):
-        """Override save method to update team scores on save."""
+        """Override save to update team scores only on position changes."""
+        if self.pk:
+            old_event = Events.objects.get(pk=self.pk)
+            old_spots = {
+                1: old_event.team_spot_1,
+                2: old_event.team_spot_2,
+                3: old_event.team_spot_3,
+                4: old_event.team_spot_4,
+                5: old_event.team_spot_5,
+            }
+            new_spots = {
+                1: self.team_spot_1,
+                2: self.team_spot_2,
+                3: self.team_spot_3,
+                4: self.team_spot_4,
+                5: self.team_spot_5,
+            }
+            self.calculate_points_change(old_spots, new_spots)
         super().save(*args, **kwargs)
-        self.update_team_scores()
 
 
 class Highlights(models.Model):

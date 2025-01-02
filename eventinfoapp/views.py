@@ -2,8 +2,8 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework import status
-from .models import Events,Highlights,ImportantPersons, Teams
-from .serializers import EventSerializer, HighlightsSerializer,ImportantPersonsSerializer, TeamSerializer
+from .models import EventImages, Events,Highlights,ImportantPersons, Teams
+from .serializers import EventImagesSerializer, EventSerializer, HighlightsSerializer,ImportantPersonsSerializer, TeamSerializer
 from django.shortcuts import get_object_or_404
 
 
@@ -111,6 +111,14 @@ def get_all_events(request):
     """View to get all event information."""
     events = Events.objects.all()
     serializer = EventSerializer(events, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_all_event_images(request):
+    """View to get all event information."""
+    eventImages = EventImages.objects.all()
+    serializer = EventImagesSerializer(eventImages, many=True)
     return Response(serializer.data)
 
 @api_view(['POST'])

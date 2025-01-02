@@ -20,7 +20,34 @@ from datetime import datetime
 import json
 
 
-employee_data = {'128122':'Kiran Pedamallu','1878139': 'Suma Peddinti', '2236674': 'Dasari Chupernechitha', '2240442': 'Rajani Kilari', '2713128': 'Gaddam Saikumar Reddy', '2119279': 'Siva Cheerla', '1856279': 'Suresh Chary Thokanti', '1926456': 'Sivannarayana Penumala', '1286853': 'Debbadi Anusha', '1517126': 'Vinod Naripella', '2553743': 'Sirisha Sirammagari', '1944821': 'Chandramahanti Sai Manasa', '2148333': 'Srinivas Alwala', '1599267': 'Chaitanya Sai Naraharisetti', '2127047': 'Kunta Sumankanth Reddy', '1783107': 'Vikram Pareek', '373064': 'Fazale Sattar Khadernaick', '2288512': 'Vinayak Dilip Pandit', '2762254': 'Hesamuddin Khan', '2688761': 'Bala Prasanna Gorrela', '2314341': 'Borusu Loka Veera Sriram', '567097': 'Srinivasu Medisetti', '2220368': 'Bagari Sravani', '2185462': 'Tushar Shashikant Manjarekar', '2327846': 'Urmila Doddi', '2265988': 'Keerthana Konda', '1951411': 'Nafisa Shaik', '1956031': 'Shivani Alluri', '1240646': 'Srinivasa Rao Polaki', '373463': 'Hafizullah S', '2360058': 'Kothapally Saibabu', '519218': 'Kandikatla Ramya', '1100660': 'Naga Rajeswara Rao Kannikanti', '1952272': 'Karthik Reddy Emireddy', '2128723': 'Abbas Ali Shaik', '2129198': 'Sinduja Singarapu', '2189564': 'Praveena Thumati', '2508958': 'Mallesh Nayak Banavath', '1967326': 'Parimi Bala Guravaiah', '22385941': 'Naveen Garladinne', '2464284': 'Nitin Arun Joshi', '2588768': 'Pooja Rajendra Mahadik', '1768991': 'Naga Durga Sai Ram Kumar Tummuri', '2158826': 'Guna Madhourai', '1623189': 'Sai Ravali Kantamaneni', '554816': 'Kuricheti Keerthana', '1209509': 'Venkatesh Pothuraju', '2650679': 'Reddibathuni Sai Keerthi', '2769612': 'Ketki Diliprao Kulkarni', '1926614': 'Naveen Sai Tanay Ravi', '974634': 'Bhanu Tejaswi Jami', '2129194': 'Haritha Chakali', '2129594': 'Vamsi Krishna Botta', '2390288': 'Pravalika Nimmala', '1780095': 'Sirisha Nagelli', '2574320': 'Appana Satya Venkata Gopala Anil', '2003632': 'Safeena Nasreen', '2539489': 'Sowmya Byatha', '1700529': 'Divya Kalakuntla', '2128564': 'Vamsikrishna Boligerla', '1945314': 'Venkata Vinay Nageswara Rao Mora', '1707240': 'Sravani Sudini', '2168743': 'Venkata Surya Sai Teja Gannavarapu', '2390723': 'Madhuri Telukuntla', '1707532': 'Mohammed Akram Alineik', '2066946': 'Atul Gupta', '1966465': 'Srikanth Thadkapally', '2208397': 'Pavan Sai Anamdasu', '2453308': 'Ravi Kumar Kethuri', '12503686': 'Surya Venkata Naveen Kumar Yerra', '2771934': 'Kumar Kailas Kapoor', '1130277': 'Chandramoulika Boggarapu', '2558996': 'Sai Male', '2562661': 'Sai Dheeraj Behara', '2702074': 'Archana Gadeela', '2774628': 'Harshali Pramod Chaudhari', '2131863': 'Sahilraj Dattatray Karaval', '2463460': 'Pasam Naresh Yadav', '1814728': 'Goli Sai Teja', '2192440': 'Tejaswini Baliboina', '2553922': 'Shivarathri Ravi Kumar', '1947575': 'Peddi Sravani', '2128738': 'Akhil Rajesh Patel Pappula', '2238130': 'Chandra Mounika Kommana', '2009593': 'Sai Manikanta Kothuri', '2276372': 'Sridevi Karri', '2561678': 'Sai Varshith Reddy Benakareddygari', '2560783': 'Aniket Revansiddha Kumbhar', '2810538': 'Srikanth C', '2386770': 'Anusha Chandrala', '2625530': 'Bhargavi Singirikonda', '599586': 'Valluri Papa Prasanna', '2510325': 'Pravalika Lingampalli', '2699194': 'Pemmasani Mounika', '1932279': 'Chandana Jagana', '2584743': 'Nikhil Dakarapu', '2660675': 'Anumolu Dharani', '2240834': 'Bandari Sandeep Kumar', '2341587': 'Roja Meka', '1299203': 'Prajakta Padmakar Shelke', '965935': 'Shivaprakash Kandoori', '1967991': 'Gunturi Venkata Surya Satya Lakshmi', '2175095': 'Atish Ranajit Patil', '2180626': 'Tanvi Hemant Devi', '2199185': 'Mahender Vanga Reddy', '2499539': 'Monica Sharma', '2566861': 'Sanjana Sanjay Pardeshi', '2639927': 'Moulika Guntupalli', '2699392': 'Chiragoni Meenay Kumar', '2650667': 'Varanasi Himabindu', '2592934': 'Akshar Mallik', '345084': 'Sree Bhargavi Vanga', '2003352': 'Bhargavi', '2527248': 'Shaikh Ayyan Shaikh Habib', '2702888': 'Thoom Manideep', '2688599': 'Rajeshwari Vishwakarma', '2649702': 'Battu Manaswini', '2075802': 'Rajavardhan Venkata Mothkuri', '2659805': 'Muddala Saharika', '1646952': 'Neelima Singamaneni', '1584032': 'Kesari Nikhil', '1637782': 'Yaseen Sultana Shaik', '1824403': 'Deepak Chandragoud Nalla', '2133454': 'Anjali Kuncham', '2128965': 'Naveen Savarala', '2129603': 'Pranitha Hanmandla', '2330118': 'Shiva Kumar Uppari', '1238454': 'Hymavathi Areti', '842047': 'Kotagiri Vinoothna', '2128851': 'Lithin Siva Swamy Naidu Majji', '1956254': 'Satya Gaayathri Brahmanapally', '2001959': 'Vamshi Krishna Challa', '2584245': 'Ganji Bhargava Sai', '1771075': 'Venkata Krishna Reddy Dumpa', '1601566': 'Surya Bhaskaram Desalanka', '2235512': 'Vyza Chandrasekhar Reddy', '1720734': 'Pavan Kumar Papolu', '1599881': 'Sabaresh Kumar Ladi'}
+names_list = ['Suma Peddinti', 'Dasari Chupernechitha', 'Rajani Kilari', 'Gaddam Saikumar Reddy', 'Siva Cheerla', 'Suresh Chary Thokanti', 'Sivannarayana Penumala', 'Debbadi Anusha', 'Vinod Naripella', 'Sirisha Sirammagari', 'Chandramahanti Sai Manasa', 'Srinivas Alwala', 'Chaitanya Sai Naraharisetti', 'Kunta Sumankanth Reddy', 'Vikram Pareek', 'Fazale Sattar Khadernaick', 'Vinayak Dilip Pandit', 'Hesamuddin Khan', 'Bala Prasanna Gorrela', 'Borusu Loka Veera Sriram', 'Srinivasu Medisetti', 'Bagari Sravani', 'Tushar Shashikant Manjarekar', 'Urmila Doddi', 'Keerthana Konda', 'Nafisa Shaik', 'Shivani Alluri', 'Srinivasa Rao Polaki', 'Hafizullah S', 'Kothapally Saibabu', 'Kandikatla Ramya', 'Naga Rajeswara Rao Kannikanti', 'Karthik Reddy Emireddy', 'Abbas Ali Shaik', 'Sinduja Singarapu', 'Praveena Thumati', 'Mallesh Nayak Banavath', 'Parimi Bala Guravaiah', 'Naveen Garladinne', 'Nitin Arun Joshi', 'Pooja Rajendra Mahadik', 'Naga Durga Sai Ram Kumar Tummuri', 'Guna Madhourai', 'Sai Ravali Kantamaneni', 'Kuricheti Keerthana', 'Venkatesh Pothuraju', 'Reddibathuni Sai Keerthi', 'Ketki Diliprao Kulkarni', 'Naveen Sai Tanay Ravi', 'Bhanu Tejaswi Jami', 'Haritha Chakali', 'Vamsi Krishna Botta', 'Pravalika Nimmala', 'Sirisha Nagelli', 'Appana Satya Venkata Gopala Anil', 'Safeena Nasreen', 'Sowmya Byatha', 'Divya Kalakuntla', 'Vamsikrishna Boligerla', 'Venkata Vinay Nageswara Rao Mora', 'Sravani Sudini', 'Venkata Surya Sai Teja Gannavarapu', 'Madhuri Telukuntla', 'Mohammed Akram Alineik', 'Atul Gupta', 'Srikanth Thadkapally', 'Pavan Sai Anamdasu', 'Ravi Kumar Kethuri', 'Surya Venkata Naveen Kumar Yerra', 'Kumar Kailas Kapoor', 'Chandramoulika Boggarapu', 'Sai Male', 'Sai Dheeraj Behara', 'Archana Gadeela', 'Harshali Pramod Chaudhari', 'Sahilraj Dattatray Karaval', 'Pasam Naresh Yadav', 'Goli Sai Teja', 'Tejaswini Baliboina', 'Shivarathri Ravi Kumar', 'Peddi Sravani', 'Akhil Rajesh Patel Pappula', 'Chandra Mounika Kommana', 'Sai Manikanta Kothuri', 'Sridevi Karri', 'Sai Varshith Reddy Benakareddygari', 'Aniket Revansiddha Kumbhar', 'Srikanth C', 'Anusha Chandrala', 'Bhargavi Singirikonda', 'Valluri Papa Prasanna', 'Pravalika Lingampalli', 'Pemmasani Mounika', 'Chandana Jagana', 'Nikhil Dakarapu', 'Anumolu Dharani', 'Bandari Sandeep Kumar', 'Roja Meka', 'Prajakta Padmakar Shelke', 'Shivaprakash Kandoori', 'Gunturi Venkata Surya Satya Lakshmi', 'Atish Ranajit Patil', 'Tanvi Hemant Devi', 'Mahender Vanga Reddy', 'Monica Sharma', 'Sanjana Sanjay Pardeshi', 'Moulika Guntupalli', 'Chiragoni Meenay Kumar', 'Varanasi Himabindu', 'Akshar Mallik', 'Sree Bhargavi Vanga', 'Bhargavi', 'Shaikh Ayyan Shaikh Habib', 'Thoom Manideep', 'Rajeshwari Vishwakarma', 'Battu Manaswini', 'Rajavardhan Venkata Mothkuri', 'Muddala Saharika', 'Neelima Singamaneni', 'Kesari Nikhil', 'Yaseen Sultana Shaik', 'Deepak Chandragoud Nalla', 'Anjali Kuncham', 'Naveen Savarala', 'Pranitha Hanmandla', 'Shiva Kumar Uppari', 'Hymavathi Areti', 'Kotagiri Vinoothna', 'Lithin Siva Swamy Naidu Majji', 'Satya Gaayathri Brahmanapally', 'Vamshi Krishna Challa', 'Ganji Bhargava Sai', 'Venkata Krishna Reddy Dumpa', 'Surya Bhaskaram Desalanka', 'Vyza Chandrasekhar Reddy', 'Pavan Kumar Papolu', 'Sabaresh Kumar Ladi']
+
+
+import Levenshtein
+
+def calculate_matching_percentage(name1, name2):
+    # Calculate the Levenshtein distance
+    distance = Levenshtein.distance(name1.lower(), name2.lower())
+    
+    # Find the length of the longest string
+    max_len = max(len(name1), len(name2))
+    
+    # Calculate the matching percentage
+    matching_percentage = ((max_len - distance) / max_len) * 100
+    return matching_percentage
+
+def get_max_matching_name(reference_name, names_list):
+    max_percentage = 0
+    best_match = ""
+    
+    for name in names_list:
+        percentage = calculate_matching_percentage(reference_name, name)
+        if percentage > max_percentage:
+            max_percentage = percentage
+            best_match = name
+    
+    return best_match, max_percentage
+
 
 
 @api_view(['GET'])
@@ -161,8 +188,8 @@ def create_user(request):
             
             # Create the user and set the password
             try:
-                username=employee_data[username]
-                user = User.objects.create_user(username=username, password=password)
+                best_match, max_percentage = get_max_matching_name(username, names_list)
+                user = User.objects.create_user(username=best_match, password=password)
                 token, created = Token.objects.get_or_create(user=user)
                 return Response({"token": token.key,"username":user.username,"isadmin":user.is_staff}, status=status.HTTP_201_CREATED)
             except ValidationError as e:
@@ -189,9 +216,9 @@ def login_view(request):
         if serializer.is_valid():
             username = serializer.validated_data['username']
             password = serializer.validated_data['password']
-            username= employee_data[username]
+            best_match, max_percentage = get_max_matching_name(username, names_list)
             # Authenticate the user
-            user = authenticate(username=username, password=password)
+            user = authenticate(username=best_match, password=password)
             if user is not None:
                 # Generate or retrieve token for the user
                 token, created = Token.objects.get_or_create(user=user)

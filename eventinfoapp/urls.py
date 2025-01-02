@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import event_list,event_detail, get_all_events, get_all_teams, get_event_details,get_highlights_list, get_important_person_list, get_team_details, update_event_team_scores
+from .views import event_list,event_detail, get_all_event_images, get_all_events, get_all_teams, get_event_details,get_highlights_list, get_important_person_list, get_team_details, update_event_team_scores
 
 urlpatterns = [
     path('get-highlights/', get_highlights_list, name='get-highlights'),
@@ -11,6 +11,7 @@ urlpatterns = [
     path('events/<int:event_id>/', get_event_details, name='get_event_details'),
     path('events/', get_all_events, name='get_all_events'),
     path('events/<int:event_id>/update-scores/', update_event_team_scores, name='update_event_team_scores'),
+    path('get-all-event-images/',get_all_event_images,name="get_all_event_images"),
 ]
 
 

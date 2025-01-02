@@ -31,16 +31,11 @@ class Teams(models.Model):
         self.overall_points = 0
         self.save()
 
-# class Events(models.Model):
-#     name = models.CharField(max_length=200)
-#     description = models.TextField()
-#     start_date = models.DateTimeField()
-#     end_date = models.DateTimeField()
-#     location = models.CharField(max_length=300)
-#     created_at = models.DateTimeField(auto_now_add=True)
-
-#     def __str__(self):
-#         return self.name
+class EventImages(models.Model):
+    eventImage_url=models.URLField(max_length=500)
+    eventName = models.CharField(max_length=100, null=True, blank=True)
+    def __str__(self):
+        return self.eventName
     
 class Events(models.Model):
     name = models.CharField(max_length=100, unique=True)

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Events,Highlights,ImportantPersons, Teams
+from .models import EventImages, Events,Highlights,ImportantPersons, Teams
 
 
 class HighlightsSerializer(serializers.ModelSerializer):
@@ -10,6 +10,11 @@ class HighlightsSerializer(serializers.ModelSerializer):
 class ImportantPersonsSerializer(serializers.ModelSerializer):
     class Meta:
         model = ImportantPersons
+        fields= '__all__'
+        
+class EventImagesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EventImages
         fields= '__all__'
 
 class TeamSerializer(serializers.ModelSerializer):

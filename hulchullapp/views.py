@@ -23,9 +23,10 @@ import json
 names_list = ['Kiran pedamallu','laxman akella', 'Rajesh reddy','Nantha Kumar Selvaraj', 'ramya radhakrishna','geetha vemula','gowtham shanmugam','vijay balchander','koty manoraj','rachana rayala','manasa bondada','sai krishna majji','chandu chittibomma','mukhram khan','manish Anand','santosh julakanti','deepak chandra goud','lithin siva swamy naidu', 'Chandra Sekhar Reddy Mukkarapu'
     'Kuricheti Keerthana', 'Bhanu Tejaswi Jami', 'Divya Kalakuntla', 'Safeena Nasreen', 'Pravalika Nimmala', 'Sravani Sudini', 'Venkatesh Pothuraju', 'Karthik Reddy Emireddy', 'Vamsikrishna Boligerla', 'Naveen Sai Tanay Ravi', 'Naveen Garla dinne', 'Praveena Thumati', 'Sal Ravall Kantamaneni', 'Vamsi Krishna Botta', 'Sirisha Nagelli', 'Abbas Ali Shaik', 'Venkata Vinay Nageswara Rao Mora', 'Sinduja Singarapu', 'SriDevi Karri', 'Srinivas Polaki', 'Parimi Bala Guravaiah', 'Sabaresh Kumar Ladi', 'Madhuri Telukuntla', 'Haritha Chakali', 'Vamshi Krishna Challa', 'Kotagiri Vinoothna', 'Anjali Kuncham', 'Naveen Savarala', 'Shiva Kumar Uppari', 'Satya Gaayathri Brahmanapally', 'Hymavathi Areti', 'Akhil Rajesh Patel Pappula', 'Peddi Sravani', 'Mohammed Akram Alinelk', 'Srikanth Thadkapally', 'Sivannarayana Penumala', 'Srinivasu Medisetti', 'Rajani Kilari', 'Shivani Alluri', 'Nafisa Shaik', 'Vikram Pareek', 'Siva Cheerla', 'Borusu Loka Veera Sriram', 'Chandramoulika Boggarapu', 'Surya Venkata Naveen Kumar Yerra', 'Sree Bhargavi Vanga', 'Praveen Kumar', 'Shivaprakash Kandoorl', 'Kesari Nikhil', 'Bandari Sandeep Kumar', 'Anusha Chandrala', 'Valluri Papa Prasanna', 'Prajakta Padmakar Shelke', 'Iragala Bhargavi', 'Chandana Jagana', 'Archana Gadeela', 'Chiragoni Meenay Kumar', 'Rajeshwari Vishwakarma', 'Thoom Manideep', 'Ganji Bhargava Sai', 'Gunturi Venkata Surya Satya Lakshmi', 'Bhargavi Singirikonda', 'Yaseen Sultana Shaik', 'Anumolu Dharani', 'Vinod Naripella', 'Kunta Sumankanth Reddy', 'Kandikatla Ramya', 'Hesamuddin Khan', 'Urmila Doddi', 'Suresh Chary Thokanti', 'Bagari Sravani', 'Suma Peddinti', 'Pranitha Hanmandla', 'Dasari Chupernechitha', 'Keerthana Konda', 'Bala Prasanna Gorrela', 'Chandramahanti Sai Manasa', 'Pavan Sai Anamdasu', 'Srinivas Alwala', 'Debbadi Anusha', 'Sirisha Sirammagari', 'Gaddam Saikumar Reddy', 'Ravi Kumar Kethurl', 'Sowmya Byatha', 'Sai Male', 'Shivarathri Ravi Kumar', 'Neelima Singamaneni', 'Mahender Vanga Reddy', 'Muddala Saharika', 'Shaikh Ayyan Shaikh Habib', 'Kothapally Saibabu', 'Rajavardhan Venkata Mothkuri', 'Battu Manaswini', 'Varanasi Himabindu', 'Nikhil Dakarapu', 'Pravalika Lingampalli', 'Roja Meka', 'Chandra Mounika Kommana', 'Sai Manikanta Kothuri', 'Prashanth Kumar Goud Kurella', 'Tharun Teja Akula', 'Chaitanya Sai Naraharisetti', 'Sai Varshith Reddy Benakareddygari', 'Mallesh Nayak Banavath', 'Naga Durga Sai Ram Kumar Tummuri', 'Reddibathuni Sai Keerthi', 'Srikanth Chinta', 'Venkata Surya Sai Teja Gannavarapu', 'Sanja Mehroze', 'Appana Satya Venkata Gopala Anil', 'Prathyusha Murari', 'Pasam Naresh Yadav', 'Goli Sai Teja', 'Sai Dheeraj Behara', 'Tejaswini Baliboina']
 
-
 import Levenshtein
+import itertools
 
+# Function to calculate the matching percentage
 def calculate_matching_percentage(name1, name2):
     # Calculate the Levenshtein distance
     distance = Levenshtein.distance(name1.lower(), name2.lower())
@@ -37,17 +38,34 @@ def calculate_matching_percentage(name1, name2):
     matching_percentage = ((max_len - distance) / max_len) * 100
     return matching_percentage
 
+# Function to match name considering different permutations
 def get_max_matching_name(reference_name, names_list):
+    reference_name = reference_name.lower()
+    reference_parts = reference_name.split()
+
     max_percentage = 0
     best_match = ""
     
-    for name in names_list:
-        percentage = calculate_matching_percentage(reference_name, name)
-        if percentage > max_percentage:
-            max_percentage = percentage
-            best_match = name
+    # Check all permutations of the reference name parts
+    permutations = itertools.permutations(reference_parts)
+    
+    for perm in permutations:
+        permuted_name = " ".join(perm)
+        
+        for name in names_list:
+            name_lower = name.lower()
+            
+            # Calculate the matching percentage for this permutation of the reference name
+            percentage = calculate_matching_percentage(permuted_name, name_lower)
+            
+            # If the match percentage is higher, update the best match
+            if percentage > max_percentage:
+                max_percentage = percentage
+                best_match = name
     
     return best_match, max_percentage
+
+# 
 
 
 
